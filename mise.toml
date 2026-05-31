@@ -1,0 +1,40 @@
+redactions = ["DATABASE_URL", "ANTHROPIC_API_KEY"]
+[env]
+# Use the project name derived from the current directory
+PROJECT_NAME = "{{ config_root | basename }}"
+DATABASE_URL = { required = true }
+ANTHROPIC_API_KEY = { required = true }
+CLAUDE_MODEL = "claude-3-5-sonnet-20240620"
+LOG_LEVEL = "INFO"
+
+# Automatic virtualenv activation
+_.python.venv = { path = ".venv", create = true }
+
+[tools]
+python = "3.13"
+ruff = "latest"
+rust = "latest"
+
+[tasks.install]
+description = "Install dependencies"
+alias = "i"
+run = "uv pip install -r requirements.txt"
+
+[tasks.run]
+description = "Run the application"
+run = "fastapi dev app/main.py"
+
+[tasks.test]
+description = "Run tests"
+run = "pytest tests/"
+
+[tasks.lint]
+description = "Lint the code"
+run = "ruff check ."
+
+[tasks.info]
+description = "Print project information"
+run = '''
+echo "Project: $PROJECT_NAME"
+echo "Virtual Environment: $VIRTUAL_ENV"
+'''

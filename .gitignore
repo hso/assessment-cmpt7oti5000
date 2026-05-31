@@ -18,6 +18,7 @@ env/
 # Environment
 .env
 .env.local
+mise.local.toml
 
 # Testing
 .pytest_cache/
